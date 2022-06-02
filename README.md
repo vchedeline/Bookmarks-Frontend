@@ -1,7 +1,8 @@
 GROUP MEMBERS 
 Chedeline
 Omari
-Ashley 
+Ashley
+Joan 
 
 
 
