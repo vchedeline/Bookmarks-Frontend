@@ -8,7 +8,7 @@ export default function Index({ bookmark, createBookmark }) {
   });
 
   const handleChange = (evt) => {
-    setNewForm({ ...newForm, [evt.target.name]: [evt.target.value] });
+    setNewForm({ ...newForm, [evt.target.name]: evt.target.value });
   };
 
   const handleSubmit = (evt) => {
