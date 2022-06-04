@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Index from "./Index";
+import { Routes, Route } from "react-router-dom";
 
 export default function DisplayBookmarks() {
-  const [bookmark, setBookmark] = useState(null);
+  const [bookmark, setBookmark] = useState({});
   const URL = "https://sei-bookmarks-lab.herokuapp.com/";
 
   const getBookmark = async () => {
@@ -12,41 +12,44 @@ export default function DisplayBookmarks() {
     setBookmark(data);
   };
 
-  useEffect(() => {
+  const createBookmark = async (bookmark) => {
+    await fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(bookmark),
+    })
+    getBookmark()
+  }
+
+  const updateBookmark = async (bookmark, id) => {
+    await fetch(URL + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(bookmark),
+    })
+    getBookmark()
+  }
+
+  const deleteBookmark = async (id) => {
+    await fetch(URL + id, {
+      method: "DELETE",
+    })
     getBookmark();
-  }, []);
+  }
 
-  const handleChange = (evt) => {
-    setBookmark(...bookmark, ([evt.target.name] = [evt.taget.value]));
-  };
+  // useEffect(() => {
+  //   getBookmark();
+  // }, []);
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    createBookmark(bookmark);
-    setBookmark({
-      title: "",
-      url: "",
-    });
-  };
-
-  return (
-    <div className="display">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="website"
-          value={bookmark.title}
-          onChange={handleChange}
-          placeholder="website"
-        />
-        <input
-          type="text"
-          name="url"
-          value={bookmark.url}
-          placeholder="http://"
-        />
-        <button type="submit">ADD BOOKMARK</button>
-      </form>
-    </div>
-  );
+ return (
+   <main>
+     <Routes>
+       <Route path="/" element={<Index bookmark={bookmark} createBookmark={createBookmark}/>}/>
+     </Routes>
+   </main>
+ )
 }
