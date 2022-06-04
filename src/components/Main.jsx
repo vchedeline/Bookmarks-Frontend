@@ -3,11 +3,11 @@ import Index from "./Index";
 import { Routes, Route } from "react-router-dom";
 
 export default function DisplayBookmarks() {
-  const [bookmark, setBookmark] = useState({});
-  const URL = "https://sei-bookmarks-lab.herokuapp.com/";
+  const [bookmark, setBookmark] = useState([]);
+  const URL = "https://sei-bookmarks-lab.herokuapp.com/bookmarks";
 
   const getBookmark = async () => {
-    const response = await fetch(URL + "bookmarks");
+    const response = await fetch(URL);
     const data = await response.json();
     setBookmark(data);
   };
@@ -19,9 +19,9 @@ export default function DisplayBookmarks() {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify(bookmark),
-    })
-    getBookmark()
-  }
+    });
+    getBookmark();
+  };
 
   const updateBookmark = async (bookmark, id) => {
     await fetch(URL + id, {
@@ -30,20 +30,20 @@ export default function DisplayBookmarks() {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify(bookmark),
-    })
-    getBookmark()
-  }
+    });
+    getBookmark();
+  };
 
   const deleteBookmark = async (id) => {
     await fetch(URL + id, {
       method: "DELETE",
-    })
+    });
     getBookmark();
-  }
+  };
 
-  // useEffect(() => {
-  //   getBookmark();
-  // }, []);
+  useEffect(() => {
+    getBookmark();
+  }, []);
 
  return (
    <main>
