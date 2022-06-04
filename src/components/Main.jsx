@@ -4,10 +4,10 @@ import { Routes, Route } from "react-router-dom";
 
 export default function DisplayBookmarks() {
   const [bookmark, setBookmark] = useState([]);
-  const URL = "https://sei-bookmarks-lab.herokuapp.com/";
+  const URL = "https://sei-bookmarks-lab.herokuapp.com/bookmarks";
 
   const getBookmark = async () => {
-    const response = await fetch(URL + "bookmarks");
+    const response = await fetch(URL);
     const data = await response.json();
     setBookmark(data);
   };

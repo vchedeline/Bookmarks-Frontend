@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Index({ bookmark, createBookmark }) {
-  const [newForm, setNewForm] = useState(null);
+  const [newForm, setNewForm] = useState({
+    title: "",
+    url: "",
+  });
 
   const handleChange = (evt) => {
-    setNewForm(...newForm, ([evt.target.name] = [evt.target.value]));
+    setNewForm({ ...newForm, [evt.target.name]: [evt.target.value] });
   };
 
   const handleSubmit = (evt) => {
@@ -33,16 +36,17 @@ export default function Index({ bookmark, createBookmark }) {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="website"
-          value={bookmark.title}
+          name="title"
+          value={newForm.title}
           onChange={handleChange}
-          placeholder="website"
+          placeholder="title"
         />
         <input
           type="text"
           name="url"
-          value={bookmark.url}
+          value={newForm.url}
           placeholder="http://"
+          onChange={handleChange}
         />
         <button type="submit">ADD BOOKMARK</button>
       </form>
