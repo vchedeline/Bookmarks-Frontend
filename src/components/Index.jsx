@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "./index.sass"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
-export default function Index({ bookmark, createBookmark }) {
+export default function Index({ bookmark, createBookmark,deleteBookmark }) {
+
+  //const {id}=useParams()
+  const navigate= useNavigate()
   const [newForm, setNewForm] = useState({
     title: "",
     url: "",
@@ -20,13 +23,24 @@ export default function Index({ bookmark, createBookmark }) {
       url: "",
     });
   };
+  
+  const removeBookmark =(id)=>{
+    deleteBookmark(id)
+    navigate("/")
+  }
+  const editBookmark =(id)=>{
+    navigate("/bookmark/" + id)
+  
+  }
 
   const loaded = () =>
     bookmark.map((site) => (
       <div key={site._id}>
-        <Link to={`/${site.url}`}>
+        <a href={site.url} target="_blank" rel="noreferrer">
           <h1>{site.title}</h1>
-        </Link>
+        </a>
+        <button className="button" onClick={()=>removeBookmark(site._id)}>REMOVE BOOKMARK</button>
+        <button className="button" onClick={()=>editBookmark(site._id)}>EDIT BOOKMARK</button>
       </div>
     ));
 

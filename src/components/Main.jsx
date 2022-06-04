@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Index from "./Index";
+import Edit from "./Edit"
 import { Routes, Route } from "react-router-dom";
 
 export default function DisplayBookmarks() {
@@ -24,7 +25,7 @@ export default function DisplayBookmarks() {
   };
 
   const updateBookmark = async (bookmark, id) => {
-    await fetch(URL + id, {
+    await fetch(URL + "/" + id, {
       method: "PUT",
       headers: {
         "Content-Type": "Application/json",
@@ -35,7 +36,7 @@ export default function DisplayBookmarks() {
   };
 
   const deleteBookmark = async (id) => {
-    await fetch(URL + id, {
+    await fetch(URL + "/" + id, {
       method: "DELETE",
     });
     getBookmark();
@@ -48,7 +49,8 @@ export default function DisplayBookmarks() {
  return (
    <main>
      <Routes>
-       <Route path="/" element={<Index bookmark={bookmark} createBookmark={createBookmark}/>}/>
+       <Route path="/" element={<Index bookmark={bookmark} createBookmark={createBookmark} deleteBookmark={deleteBookmark} />}/>
+       <Route path="/bookmark/:id" element={<Edit bookmark={bookmark} updateBookmark={updateBookmark}/>}/>
      </Routes>
    </main>
  )
